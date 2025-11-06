@@ -33,6 +33,7 @@ start_game = {}
 gui = {}
 game_state = ["-", "-", "-", "-", "-", "-", "-", "-", "-"]
 global player 
+draw = False
 
 
 
@@ -49,7 +50,7 @@ def allowed_moves():
 
 def get_move():
 #check against valid moves
-    time.sleep(3)
+    time.sleep(2)
     valid_moves = allowed_moves()
     is_valid_move = False
     while not is_valid_move:
@@ -60,8 +61,7 @@ def get_move():
             if temp_move == valid_moves[i]:
                 is_valid_move = True
                 return temp_move
-            else:
-                print("invalid move. Try again.")
+        print("invalid move. Try again.")
         #if statement to check who's turn it is
     return -1
 
@@ -72,7 +72,16 @@ def get_move():
 
 #check for win
 def check_for_win():
-    print(game_state)
+    for i in range(len(game_state)):
+        if i//3 == 0:
+            print(game_state[i], end = " ")
+        if i//3 == 1:
+             print(game_state[i], end = " ")
+        if i//3 == 2:
+            print(game_state[i], end = " ")
+        if i%3 == 2:
+            print("\n")
+
     moves = []
     #check which player whose turn it is
     if player == 1:
@@ -130,19 +139,25 @@ def update_game_state(i, c):
 def play():
     init_game()
     while check_for_win() != 1:
+        if not allowed_moves():
+            draw = True
+            break
+
+        change_turn()               
         if player == 1:
             c = "X"
         else:
             c = "O"
 #       update the player 
-        change_turn()
 
         #get move from AI
         move = get_move()
         
         update_game_state(move, c)
-
-        #check for win
-        check_for_win()
+    print("-- GAME OVER --")
+    if check_for_win() == 1:
+        print("Player ", player, " won!")
+    else:
+        print("It's a Draw")
     
 play()
