@@ -57,6 +57,7 @@ def get_move():
         print("your turn")
         print("valid moves: ", valid_moves)
         temp_move = int(input("make a move: "))
+        ## SAFETY CHECK NEEDED ##
         for i in range(len(valid_moves)):
             if temp_move == valid_moves[i]:
                 is_valid_move = True
