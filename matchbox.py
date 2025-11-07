@@ -135,7 +135,25 @@ def update_game_state(i, c):
 
 #clear board
             
-    
+
+#AI Opponent Component
+#Feed AI the board state 
+#Game state with -'s
+#Corresponding position [0 - 8]
+# Percent chance to make each move
+#Return a move based on available moves
+#if move is available, make move and change game state
+#if it wins, increase those moves it made
+
+#check symmetry for rotations and reflections
+# 4 rotations + vertical reflection + 4 rotations
+#i = index; j = rotations
+#to rotate board 90-degress counter-clockwise j = (2 - i)*3
+# def get_symmetry()
+    # for i in range(len(moves)):
+    #     win_conditions[moves[i]//3] += 1
+    #     win_conditions[moves[i]%3 + 3] += 1
+
 #PLay state
 def play():
     init_game()
