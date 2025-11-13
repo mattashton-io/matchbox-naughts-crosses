@@ -200,12 +200,13 @@ def print_symmetries():
     for j in range(8):
         for i in range(len(game_state)):
             if i//3 == 0:
-                print(game_state[j][i], end = " ")
+                print(test_symmetry[j][i], end = " ")
             if i//3 == 1:
-                print(game_state[j][i], end = " ")
+                print(test_symmetry[j][i], end = " ")
             if i//3 == 2:
-                print(game_state[j][i], end = " ")
+                print(test_symmetry[j][i], end = " ")
             if i%3 == 2:
                 print("\n")
+        print("\n")
 # play()
 print_symmetries()
