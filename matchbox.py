@@ -21,7 +21,7 @@ High-level concepts
 
 """
 import time
-
+from data_mgmt import data_mgmt
 
 board = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 game_pieces = []
@@ -148,11 +148,25 @@ def update_game_state(i, c):
 #check symmetry for rotations and reflections
 # 4 rotations + vertical reflection + 4 rotations
 #i = index; j = rotations
-#to rotate board 90-degress counter-clockwise j = (2 - i)*3
+# %3 = x-value; i//3 = y-value
+# i = 3*(i//3) + (i%3)
+# step 0: diagonal  flip x and y; turn i into x = i//3, y = i%3
+# step 1: vertical flip -(i%3 - 1) + 1 -> 2 - i%3
+# step 2: 3(y) + x -> how to go back to [i] integers from x,y values
+
+#to rotate board 90-degress counter-clockwise j = 3*(i//3) + (i%3)
 # def get_symmetry()
     # for i in range(len(moves)):
     #     win_conditions[moves[i]//3] += 1
     #     win_conditions[moves[i]%3 + 3] += 1
+
+
+#new i (after rotation)
+for i in range(8):
+    temp = game_state.copy()
+    for j in range(len(game_state)):
+        temp[3*(2-j%3) + j//3] = game_state[j]
+
 
 #PLay state
 def play():
@@ -178,5 +192,20 @@ def play():
         print("Player ", player, " won!")
     else:
         print("It's a Draw")
-    
-play()
+
+def print_symmetries():
+    dm = data_mgmt()
+    test_gs = ["-", "X", "-", "-", "O", "-", "X", "-", "-"]
+    test_symmetry = dm.get_symmetry(test_gs)
+    for j in range(8):
+        for i in range(len(game_state)):
+            if i//3 == 0:
+                print(game_state[j][i], end = " ")
+            if i//3 == 1:
+                print(game_state[j][i], end = " ")
+            if i//3 == 2:
+                print(game_state[j][i], end = " ")
+            if i%3 == 2:
+                print("\n")
+# play()
+print_symmetries()
