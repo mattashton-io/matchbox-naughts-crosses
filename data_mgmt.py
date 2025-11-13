@@ -11,9 +11,6 @@
 #new integer value (after rotation) = 3(2-j%3) + j//3
 
 class data_mgmt:
-    def __init__(self):
-        return             
-
     def get_symmetry(game_state):
         symmetry = [["-" for k in range(8)] for l in range(len(game_state))] #8 game state rows, each game state row will be populated with "-" across 9 positions
         symmetry[0] = game_state.copy() #locks in current game state to top row 
