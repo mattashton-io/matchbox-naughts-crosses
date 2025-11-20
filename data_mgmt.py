@@ -11,6 +11,9 @@
 #new integer value (after rotation) = 3(2-j%3) + j//3
 
 class data_mgmt:
+    def __init__(self):
+        return None
+    
     def get_symmetry(self, game_state):
         symmetry = [["-" for k in range(8)] for l in range(len(game_state))] #8 game state rows, each game state row will be populated with "-" across 9 positions
         symmetry[0] = game_state.copy() #locks in current game state to top row 
@@ -30,3 +33,19 @@ class data_mgmt:
             symmetry[i+1] = temp
         
         return symmetry
+    
+    def read_from_file(self, filename):
+        self.filename = filename
+        try:
+            with open(filename, "x") as fid:
+                fid.write("0")
+                return fid 
+        except FileExistsError:
+            with open(filename, "r") as fid:
+                current_file = fid.readlines()
+                print(current_file)
+                return current_file
+        
+
+
+            

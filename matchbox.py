@@ -22,6 +22,7 @@ High-level concepts
 """
 import time
 from data_mgmt import data_mgmt
+from ai import ai
 
 board = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 game_pieces = []
@@ -210,3 +211,21 @@ def print_symmetries():
         print("\n")
 # play()
 print_symmetries()
+
+opponent = ai("easy")
+
+reader = data_mgmt()
+
+#printed twice? 
+print(opponent.get_move(game_state, 1, reader))
+
+#format data structure
+#request move
+#give turn number
+# "easy_move_1
+# #open (file)
+# #loop: untl end or find match
+#   current game_state
+#   symmetries
+#   line gs == symmetries
+#   determine move w/prob
