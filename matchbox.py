@@ -214,10 +214,8 @@ print_symmetries()
 
 opponent = ai("easy")
 
-reader = data_mgmt()
-
 #printed twice? 
-print(opponent.get_move(game_state, 1, reader))
+print(opponent.get_move(game_state, 1))
 
 #format data structure
 #request move
