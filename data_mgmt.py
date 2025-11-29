@@ -43,7 +43,7 @@ class data_mgmt:
         except FileExistsError:
             with open(filename, "r") as fid:
                 current_file = fid.readlines()
-                print(current_file)
+                # print(current_file)
                 return current_file
         
 
