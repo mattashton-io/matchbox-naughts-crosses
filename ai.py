@@ -9,13 +9,32 @@ class ai:
         temp_gs = []
         prob = [[] for _ in range(2)]
         for i in range(len(line)):
+            done = False
             if not i == 0 and i < 46:
                 if (i-1)%5 == 1:
                     temp_gs.append(str(line[i]))
-            elif  i > 46:
-                for j in range (i, i+12): #prob/probability HERE will have to chunk out/ loop through until we get to next parentheses (chop off commas and spaces) 
-                    if i == 47:
-                        print (line[j])              
+            elif  i > 46: #probability section of moves
+                temp_prob = [0, ""]
+                for j in range (i, i+11): #prob/probability HERE will have to chunk out/ loop through until we get to next parentheses (chop off commas and spaces) 
+                    print("j - 47: ", j - 47)
+                    if done:
+                        print("done")
+                        break
+                    if (j - 47)%12 == 1: #position 1 = allowed moved 
+                        temp_prob[0] = int(line[j]) 
+                        print(temp_prob[0])
+                        print("temp_prob[0]")   
+                    elif (j - 47)%12 == 4:
+                        for k in range(5):
+                            temp_prob[1] = temp_prob[1] + line[j + k]  
+                        # temp_prob[1] = float(temp_prob[1])  
+                        print(temp_prob[1])
+                        print("temp_prob[1]")
+                        done = True
+            if i + 11 < len(line):
+                i = i + 11
+            else:
+                break
         return temp_gs
 
         
