@@ -19,19 +19,20 @@ class ai:
                 for j in range (i, i+11): #prob/probability HERE will have to chunk out/ loop through until we get to next parentheses (chop off commas and spaces) 
                     # print("j - 47: ", j - 47)
                     if done:
-                        print("done")
+                        # print("done")
                         break
                     if (j - 47)%12 == 1: #position 1 = allowed moved 
                         temp_prob[0] = int(line[j]) 
-                        print(temp_prob[0])
-                        print("temp_prob[0]")   
+                        print("temp_prob[0]: ", temp_prob[0])
                     elif (j - 47)%12 == 4:
                         for k in range(5):
-                            temp_prob[1] += line[j + k]  
-                        # temp_prob[1] = float(temp_prob[1])  
-                        print(temp_prob[1])
-                        print("temp_prob[1]")
+                            temp_prob[1] += line[j + k]   
+                        print("temp_prob[1]: ", temp_prob[1])
                         done = True
+                        try: 
+                            temp_prob[1] = float(temp_prob[1]) 
+                        except Exception as e: 
+                            print(e)
             if i + 11 < len(line):
                 i = i + 11
             else:
