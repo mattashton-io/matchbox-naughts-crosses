@@ -8,6 +8,7 @@ class ai:
     def parse_line(self, line):
         temp_gs = []
         prob = []
+        gs = []
         i = 0
         while i < (len(line)):
             done = False
@@ -15,6 +16,7 @@ class ai:
                 if (i-1)%5 == 1:
                     temp_gs.append(str(line[i]))
             elif  i > 46: #probability section of moves
+                gs = temp_gs
                 temp_prob = [0, ""]
                 for j in range (i, i+11): #prob/probability HERE will have to chunk out/ loop through until we get to next parentheses (chop off commas and spaces) 
                     if done:
@@ -30,12 +32,12 @@ class ai:
                             prob.append(temp_prob)
                         except Exception as e: 
                             print(e)
-            if i + 11 < len(line):
-                i = i + 11
-            else:
+            if i + 12 >= len(line):
                 break
+            elif i > 46 and (i + 11) < len(line):
+                i += 11
             i += 1
-        return temp_gs, prob 
+        return gs, prob 
 
         
     #loop through each game state, calculate equivalents
