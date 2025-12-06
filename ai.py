@@ -7,7 +7,8 @@ class ai:
 
     def parse_line(self, line):
         temp_gs = []
-        prob = [[] for _ in range(2)]
+        prob = [[]]
+        print(prob)
         i = 0
         while i < (len(line)):
             done = False
@@ -23,14 +24,21 @@ class ai:
                         break
                     if (j - 47)%12 == 1: #position 1 = allowed moved 
                         temp_prob[0] = int(line[j]) 
-                        print("temp_prob[0]: ", temp_prob[0])
+                        # print("temp_prob[0]: ", temp_prob[0])
                     elif (j - 47)%12 == 4:
                         for k in range(5):
                             temp_prob[1] += line[j + k]   
-                        print("temp_prob[1]: ", temp_prob[1])
+                        # print("temp_prob[1]: ", temp_prob[1])
                         done = True
                         try: 
                             temp_prob[1] = float(temp_prob[1]) 
+                            print((j - 47)//12)
+                            if (j - 47 //12) < 0:
+                                prob[(j-47)//12][0] = temp_prob[0]
+                            else:
+                                prob.append(temp_prob)
+                            # print(prob)
+                                print(prob[(j - 47)//12])
                         except Exception as e: 
                             print(e)
             if i + 11 < len(line):
