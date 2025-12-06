@@ -32,11 +32,11 @@ class ai:
                             prob.append(temp_prob)
                         except Exception as e: 
                             print(e)
-            if i + 12 >= len(line):
+            if i + 23 >= len(line): # 23 is to provide a buffer. The buffer is 2* a chunk (12) - 1; so 24 - 1 = 23
                 break
-            elif i > 46 and (i + 11) < len(line):
-                i += 11
-            i += 1
+            elif i > 46 and (i + 11) < len(line): #46 takes us to the probability portion of the move
+                i += 11 # 11 means capturing probabilities from "(" to ")" in chunks of 12; we still iterate through each chunk
+            i += 1 # iterating through the game states/ allowed moves
         return gs, prob 
 
         
