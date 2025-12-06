@@ -42,6 +42,7 @@ class ai:
     #rotate, if match found - then we can record move
     def compare_states(self, gs_current, gs_file):
         for state in range(len(gs_file)):
+            print(gs_file[state])
             symmetries = self.dm.get_symmetry(gs_file[state])
             ##extract the allowed moves
             for i in range(len(symmetries)):
@@ -63,6 +64,8 @@ class ai:
             temp_gs, temp_prob = self.parse_line(file_lines[i])
             gs_list.append(temp_gs)
             prob_list.append(temp_prob)
+            print(gs_list[i])
+            print(prob_list[i])
         state, rotation = self.compare_states(gs, gs_list)
         print(state, rotation)
         return 0 #returning 0 in the console as a placeholder 
