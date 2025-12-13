@@ -10,6 +10,7 @@
 #keep track of all moves in game state
 
 class trainer:
+    """Punishment and Reward System for Game"""
     def __init__(self):
         return 0
 
