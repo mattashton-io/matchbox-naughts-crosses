@@ -39,7 +39,32 @@ class ai:
             i += 1 # iterating through the game states/ allowed moves
         return gs, prob 
 
-        
+    def generate_line(self):
+        #ad logic to creat each gs-prob line in file from ["gs[0]",....,"gs[8]" + "prob[0]"" +...+ "prob[n]""]
+        gs_line = "["
+        for gs in range(len(self.gs)):
+            if gs != 8:
+                gs_line += "\"" + self.gs[gs]  + "\"" + ", "
+            else:
+                gs_line += "\"" + self.gs[gs] + "\""
+        gs_line += "] "  
+
+        prob_line = "["
+        default_val = str(round(1/len(self.allowed_moves), 3))
+        while len(default_val) < 5:
+            default_val += "0" 
+
+        for prob in range(len(self.allowed_moves)):
+            #calculate probably 
+            # replicate (allowed_moves[prob], default_val), 
+            if prob != len(self.allowed_moves) - 1:
+                prob_line += "(" + str(self.allowed_moves[prob]) + ", " + default_val + "), " 
+            else:
+                prob_line += "(" + str(self.allowed_moves[prob]) + ", " + default_val + ")"      
+        prob_line += "]"    
+        gs_prob_line = gs_line + prob_line
+        self.dm.write_to_file(self.filename, gs_prob_line)
+    
     #loop through each game state, calculate equivalents
     #rotate, if match found - then we can record move
     def compare_states(self, gs_current, gs_file):
@@ -51,13 +76,15 @@ class ai:
                 if symmetries[i] == gs_current:
                     return state, i
                 
-        #if we did not find a move that matches symmetric game-states, add game-state  to move list
+        #if we did not find a move that matches symmetric game-states, add game-state and probabilities to move list
+        self.generate_line()
         return -1, -1
 
 
-    def get_move(self, gs, move_num):
+    def get_move(self, gs, move_num, allowed_moves):
         self.gs = gs
         self.move_num = move_num
+        self.allowed_moves = allowed_moves
         gs_list = []
         prob_list = []
         self.filename = str(self.difficulty) + "_move_" + str(self.move_num) + ".txt"

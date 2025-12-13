@@ -214,9 +214,10 @@ def print_symmetries():
 
 opponent = ai("easy")
 
-game_state_test = ["-", "-", "X", "-", "-", "-", "-", "-", "-"]
+game_state_test = ["-", "-", "-", "-", "X", "-", "-", "-", "-"]
+game_state = game_state_test
 #printed twice? 
-print(opponent.get_move(game_state_test, 1)) ## ai.py get_move()
+print(opponent.get_move(game_state_test, 1, allowed_moves())) ## ai.py get_move()
 
 #format data structure
 #request move

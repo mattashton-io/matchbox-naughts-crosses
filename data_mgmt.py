@@ -46,6 +46,18 @@ class data_mgmt:
                 # print(current_file)
                 return current_file
         
+    def write_to_file(self, filename, gs_prob_line):
+        self.gs_prob_line = gs_prob_line
+        self.filename = filename
+        try:
+            with open(filename, "a") as fid:
+                fid.write("\n")
+                fid.write(gs_prob_line) 
+                return fid 
+        except Exception as e:
+            print(e)
+            return -1
+
 
 
             
