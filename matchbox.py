@@ -113,7 +113,7 @@ def check_for_win():
     for w in range(len(win_conditions)):
         if win_conditions[w] == 3:
             return 1
-    print(win_conditions)    
+    # print(win_conditions)    
     return 0
 
 
@@ -172,7 +172,10 @@ for i in range(8):
 #PLay state
 def play():
     init_game()
+    opponent = ai("easy")
+    move_num = 0
     while check_for_win() != 1:
+        print("\n")
         if not allowed_moves():
             draw = True
             break
@@ -185,9 +188,13 @@ def play():
 #       update the player 
 
         #get move from AI
-        move = get_move()
-        
+        if player == 1:
+            move = get_move()
+        else:
+            move = opponent.get_move(game_state, move_num, allowed_moves())
+            print("move = ", move)
         update_game_state(move, c)
+        move_num += 1
     print("-- GAME OVER --")
     if check_for_win() == 1:
         print("Player ", player, " won!")
@@ -209,15 +216,14 @@ def print_symmetries():
             if i%3 == 2:
                 print("\n")
         print("\n")
-# play()
+play()
 # print_symmetries()
 
-opponent = ai("easy")
 
-game_state_test = ["-", "-", "-", "-", "X", "-", "-", "-", "-"]
-game_state = game_state_test
-#printed twice? 
-print(opponent.get_move(game_state_test, 1, allowed_moves())) ## ai.py get_move()
+# game_state_test = ["-", "-", "X", "-", "-", "-", "-", "-", "-"]
+# game_state = game_state_test
+# #printed twice? 
+# print(opponent.get_move(game_state_test, 1, allowed_moves())) ## ai.py get_move()
 
 #format data structure
 #request move

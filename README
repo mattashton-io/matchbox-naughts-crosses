@@ -1,1 +1,4 @@
 12/13/25 - Start on line 52 of ai.py
+
+Edge Cases to check for:
+- Total probability might not add up to 1.000 because of rounding; we need to catch that (i.e. dividing by 3, 7, 6, etc)

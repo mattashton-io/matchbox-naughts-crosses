@@ -38,8 +38,8 @@ class data_mgmt:
         self.filename = filename
         try:
             with open(filename, "x") as fid:
-                fid.write("0")
-                return fid 
+                fid.write("\n")
+                return None
         except FileExistsError:
             with open(filename, "r") as fid:
                 current_file = fid.readlines()
@@ -58,6 +58,16 @@ class data_mgmt:
             print(e)
             return -1
 
+    def write_first_line(self, filename, gs_prob_line):
+        self.gs_prob_line = gs_prob_line
+        self.filename = filename
+        try:
+            with open(filename, "w") as fid:
+                fid.write(gs_prob_line) 
+                return fid 
+        except Exception as e:
+            print(e)
+            return -1
 
 
             
