@@ -103,8 +103,9 @@ class ai:
                 for i in range(rotation):
                     rotated_position = (3*(2-rotated_position%3) + rotated_position//3) #ccw rotation
                     if i == 3: #vertical flip after first 4 rotations
+                        print("diagonal rotation initialized")
                         rotated_position = (3*(2-rotated_position//3) + rotated_position%3)
-                # print("p[0] = ", p[0], "\n new rotated position: ", rotated_position)
+                print("p[0] = ", p[0], "\n new rotated position: ", rotated_position)
                 return rotated_position #computer picks move
 
 
