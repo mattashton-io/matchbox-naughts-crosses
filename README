@@ -1,4 +1,4 @@
-12/13/25 - Start on line 52 of ai.py
+12/21/25 - easy_move_n files are duplicating entries on even-numbered files; duplicating every time a new row is appended to file
 
 Edge Cases to check for:
 - Total probability might not add up to 1.000 because of rounding; we need to catch that (i.e. dividing by 3, 7, 6, etc)
