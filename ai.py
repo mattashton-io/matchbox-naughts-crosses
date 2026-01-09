@@ -41,7 +41,7 @@ class ai:
             i += 1 # iterating through the game states/ allowed moves
         return gs, prob 
 
-    def generate_line(self, first_line):
+    def generate_line(self, first_line, write):
         #ad logic to creat each gs-prob line in file from ["gs[0]",....,"gs[8]" + "prob[0]"" +...+ "prob[n]""]
         gs_line = "["
         for gs in range(len(self.gs)):
@@ -65,25 +65,31 @@ class ai:
                 prob_line += "(" + str(self.allowed_moves[prob]) + ", " + default_val + ")"      
         prob_line += "]"    
         gs_prob_line = gs_line + prob_line
-        if not first_line:
-            self.dm.write_to_file(self.filename, gs_prob_line)
-        else:
-            self.dm.write_first_line(self.filename, gs_prob_line)
+        if write:
+            print("no move found; appending file")
+            if not first_line:
+                self.dm.write_to_file(self.filename, gs_prob_line)
+            else:
+                self.dm.write_first_line(self.filename, gs_prob_line)
     
     
     #loop through each game state, calculate equivalents
     #rotate, if match found - then we can record move
-    def compare_states(self, gs_current, gs_file):
+    def compare_states(self, gs_current, gs_file, write):
         for state in range(len(gs_file)):
             # print(gs_file[state])
             symmetries = self.dm.get_symmetry(gs_file[state])
+            if self.move_num > 5:
+                print("symmetry = ", symmetries)
             #iterate through symmetries
             for rotation in range(len(symmetries)):
                 if symmetries[rotation] == gs_current:
+                    print("symmetries[rotation]: ", symmetries[rotation])
                     return state, rotation
                 
         #if we did not find a move that matches symmetric game-states, add game-state and probabilities to move list
-        self.generate_line(False)
+        self.generate_line(False, write)
+
         return -1, -1
 
     def pick_a_move(self, rotation, prob_list):
@@ -98,6 +104,10 @@ class ai:
                 cumulative_int += current_int
                 # print("cumulative int value = ", cumulative_int)
             else:
+                print("rand: ", rand)
+                print("cumulative int: ", cumulative_int)
+                print("rotation: ", rotation)
+                print("prob_list: ", prob_list)
                 rotated_position = p[0] 
                 # print("init rotated position = ", rotated_position)
                 for i in range(rotation):
@@ -119,7 +129,7 @@ class ai:
         self.filename = str(self.difficulty) + "_move_" + str(self.move_num) + ".txt"
         file_lines = self.dm.read_from_file(self.filename)
         if file_lines is None:
-            self.generate_line(True)
+            self.generate_line(True, True)
             file_lines = self.dm.read_from_file(self.filename)
 
         for i in range(len(file_lines)):
@@ -128,11 +138,20 @@ class ai:
             prob_list.append(temp_prob)
             # print(gs_list[i])
             # print(prob_list[i])
-        state, rotation = self.compare_states(gs, gs_list)
+        state, rotation = self.compare_states(gs, gs_list, True) #double export
+
         if state == -1:
-            state, rotation = self.compare_states(gs, gs_list)
+            for i in range(len(file_lines)):
+                temp_gs, temp_prob = self.parse_line(file_lines[i])
+                gs_list.append(temp_gs)
+                prob_list.append(temp_prob)
+                # print(gs_list[i])
+                # print(prob_list[i])
+            state, rotation = self.compare_states(gs, gs_list, False) #double export
+
         # print("prob_list: \n", prob_list[state])
-        # print(state, rotation)
+        print("state, rotation: ", state, rotation)
+        print("gs: ", self.gs)
 
         move = self.pick_a_move(rotation, prob_list[state])
 

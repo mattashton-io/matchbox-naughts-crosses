@@ -15,11 +15,10 @@ class data_mgmt:
         return None
     
     def get_symmetry(self, game_state):
-        symmetry = [["-" for k in range(8)] for l in range(len(game_state))] #8 game state rows, each game state row will be populated with "-" across 9 positions
+        symmetry = [["-" for k in range(len(game_state))] for l in range(8)] #8 game state rows, each game state row will be populated with "-" across 9 positions
         symmetry[0] = game_state.copy() #locks in current game state to top row 
         for i in range(7): #
             temp = game_state.copy()
-
             for j in range(len(game_state)):
                     temp[3*(2-j%3) + j//3] = symmetry[i][j]
             
@@ -27,9 +26,9 @@ class data_mgmt:
                 temp_two = [0 for k in range(9)]
 
                 for j in range(len(game_state)):
-                    temp_two[3*(2-j//3) + j%3] = temp[j]
-                    
+                    temp_two[3*(2-j//3) + j%3] = temp[j]                    
                 temp = temp_two
+
             symmetry[i+1] = temp
         
         return symmetry
