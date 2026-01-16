@@ -23,6 +23,7 @@ High-level concepts
 import time
 from data_mgmt import data_mgmt
 from ai import ai
+from trainer import trainer
 
 board = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 game_pieces = []
@@ -173,6 +174,8 @@ for i in range(8):
 def play():
     init_game()
     opponent = ai("easy")
+    trainer = trainer()
+    global draw
     move_num = 0
     while check_for_win() != 1:
         print("\n")
@@ -191,7 +194,8 @@ def play():
         if player == 1:
             move = get_move()
         else:
-            move = opponent.get_move(game_state, move_num, allowed_moves())
+            move = trainer.get_move(game_state, move_num, allowed_moves(), opponent)
+            # move = opponent.get_move(game_state, move_num, allowed_moves())
             print("move = ", move)
         update_game_state(move, c)
         move_num += 1

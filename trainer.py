@@ -8,12 +8,16 @@
 # if game state does not equal symmetry ...
 
 #keep track of all moves in game state
+from ai import ai
 
 class trainer:
     """Punishment and Reward System for Game"""
     def __init__(self):
-        return 0
+        pass
 
     def update_move(self, gs):
         self.gs = gs
         return 0
+
+    def get_move(self, gs, move_num, allowed_moves, ai_obj):
+        return ai_obj.get_move(gs, move_num, allowed_moves)
