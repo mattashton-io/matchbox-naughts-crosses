@@ -17,8 +17,11 @@ class ai:
             if not i == 0 and i < 46:
                 if (i-1)%5 == 1:
                     temp_gs.append(str(line[i]))
+                    print("temp_gs: ", temp_gs)
             elif  i > 46: #probability section of moves
+                # position 46 is "["
                 gs = temp_gs #finish populating gamestates, then store in gs
+                print("gs = temp_gs: ", gs)
                 if self.filename == "easy_move_8.txt":
                     print("parse_lines gs", gs)
                 temp_prob = [0, ""]
@@ -37,7 +40,7 @@ class ai:
                             prob.append(temp_prob)
                         except Exception as e: 
                             print(e)
-            if i + 23 >= len(line): # 23 is to provide a buffer. The buffer is 2* a chunk (12) - 1; so 24 - 1 = 23
+            if i + 23 >= len(line) and i > 46: # 23 is to provide a buffer. The buffer is 2* a chunk (12) - 1; so 24 - 1 = 23
                 break
             elif i > 46 and (i + 11) < len(line): #46 takes us to the probability portion of the move
                 i += 11 # 11 means capturing probabilities from "(" to ")" in chunks of 12; we still iterate through each chunk
@@ -148,6 +151,7 @@ class ai:
             file_lines = self.dm.read_from_file(self.filename)
 
         for i in range(len(file_lines)):
+            # print("file_lines[i]: ", file_lines[i])
             temp_gs, temp_prob = self.parse_line(file_lines[i])
             gs_list.append(temp_gs)
             prob_list.append(temp_prob)

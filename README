@@ -3,4 +3,4 @@
 Edge Cases to check for:
 - Total probability might not add up to 1.000 because of rounding; we need to catch that (i.e. dividing by 3, 7, 6, etc)
 
-1/8 - Fix out of bounds error 
+1/14 - line 25 of ai.py parse_lines
