@@ -174,7 +174,7 @@ for i in range(8):
 def play():
     init_game()
     opponent = ai("easy")
-    trainer = trainer()
+    game_trainer = trainer()
     global draw
     move_num = 0
     while check_for_win() != 1:
@@ -194,7 +194,7 @@ def play():
         if player == 1:
             move = get_move()
         else:
-            move = trainer.get_move(game_state, move_num, allowed_moves(), opponent)
+            move = game_trainer.get_move(game_state, move_num, allowed_moves(), opponent)
             # move = opponent.get_move(game_state, move_num, allowed_moves())
             print("move = ", move)
         update_game_state(move, c)
