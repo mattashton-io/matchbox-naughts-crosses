@@ -127,7 +127,7 @@ def change_turn():
 
 def init_game():
     global player
-    player = 1
+    player = 0
     
 
 def update_game_state(i, c):

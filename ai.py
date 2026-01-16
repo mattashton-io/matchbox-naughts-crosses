@@ -25,7 +25,6 @@ class ai:
                 if self.filename == "easy_move_8.txt":
                     print("parse_lines gs", gs)
                 temp_prob = [0, ""]
-                #buffer = i + 10
                 for j in range (i, i+11): #prob/probability HERE will have to chunk out/ loop through until we get to next parentheses (chop off commas and spaces) 
                     if done:
                         break
@@ -40,7 +39,7 @@ class ai:
                             prob.append(temp_prob)
                         except Exception as e: 
                             print(e)
-            if i + 23 >= len(line) and i > 46: # 23 is to provide a buffer. The buffer is 2* a chunk (12) - 1; so 24 - 1 = 23
+            if i + 22 >= len(line) and i > 46: # 23 is to provide a buffer. The buffer is 2* a chunk (12) - 1; so 24 - 1 = 23
                 break
             elif i > 46 and (i + 11) < len(line): #46 takes us to the probability portion of the move
                 i += 11 # 11 means capturing probabilities from "(" to ")" in chunks of 12; we still iterate through each chunk
@@ -107,7 +106,7 @@ class ai:
         temp_input = input()
 
         rand = random.randint(0, 999)
-        # print("random int = ", rand)
+        print("random int = ", rand)
         cumulative_int = 0
         for p in prob_list:
             # print("p-value = ", p)
@@ -141,7 +140,7 @@ class ai:
         prob_list = []
         self.filename = str(self.difficulty) + "_move_" + str(self.move_num) + ".txt"
         file_lines = self.dm.read_from_file(self.filename)
-        if move_num == 8:
+        if move_num >= 7:
             print("file_lines: ", file_lines)
             print("filename: ", self.filename)
             input()
