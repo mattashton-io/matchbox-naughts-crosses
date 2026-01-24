@@ -194,7 +194,7 @@ def play():
         if player == 1:
             move = get_move()
         else:
-            move = game_trainer.get_move(game_state, move_num, allowed_moves(), opponent)
+            move = game_trainer.get_move(game_state, move_num, allowed_moves(), opponent, player)
             # move = opponent.get_move(game_state, move_num, allowed_moves())
             print("move = ", move)
         update_game_state(move, c)
