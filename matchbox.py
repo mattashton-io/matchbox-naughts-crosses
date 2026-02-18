@@ -201,6 +201,7 @@ def play():
         move_num += 1
     print("-- GAME OVER --")
     if check_for_win() == 1:
+        game_trainer.update_file(player, 1) # 1 = win for player 1 or 0
         print("Player ", player, " won!")
     else:
         print("It's a Draw")

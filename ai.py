@@ -238,4 +238,4 @@ class ai:
         # print("gs: ", self.gs)
 
         board_move, file_move = self.pick_a_move(rotation, prob_list[state], True)
-        return board_move, file_move 
+        return board_move, file_move, state 
