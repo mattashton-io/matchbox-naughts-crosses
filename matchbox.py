@@ -174,7 +174,7 @@ for i in range(8):
 def play():
     init_game()
     opponent = ai("easy")
-    game_trainer = trainer()
+    game_trainer = trainer("easy")
     global draw
     move_num = 0
     while check_for_win() != 1:
@@ -201,7 +201,7 @@ def play():
         move_num += 1
     print("-- GAME OVER --")
     if check_for_win() == 1:
-        game_trainer.update_file(player, 1) # 1 = win for player 1 or 0
+        game_trainer.update_file(player) 
         print("Player ", player, " won!")
     else:
         print("It's a Draw")

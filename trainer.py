@@ -36,10 +36,11 @@ class trainer:
 
         if prob[-1][1] < 0:
             prob[-1][1] = 0
-            normalize(prob) #recursion, function calling itself. Re-normalize in case prob is less than 0
+            prob = normalize(prob) #recursion, function calling itself. Re-normalize in case prob is less than 0
 
+        return prob
 
-    def update_file(self, player, win):
+    def update_file(self, player): #can add "win" as param if we decide to implement DRAW logic
         #grab game state from self.gs
         for i in range(len(self.gs)):
             cf = ai.dm.read_from_file(str(self.difficulty) + "_move_" + str(i) + ".txt")
@@ -57,7 +58,7 @@ class trainer:
                 else: #even moves made by player 0
                     move = ai_moves_1[i//2]
 
-            index = 10
+            index = 10 #10 is out of bounds
             for j in range(len(prob)):
                 if prob[j][0] == move:
                     index = j #which line we're on inside the prob array
@@ -67,11 +68,18 @@ class trainer:
                 #self.ai.moves_x -> increase probability of those moves
                 if i%2 == 0: 
                     prob[index][1] *= 1.05
+                    prob = self.normalize(prob)
                 else:
                     prob[index][1] *= 0.95
-            
+                    prob = self.normalize(prob)
+            else:
+                if i%2 == 0: 
+                    prob[index][1] *= 0.95
+                    prob = self.normalize(prob)
+                else:
+                    prob[index][1] *= 1.05
+                    prob = self.normalize(prob)
 
-        return 0
 
     def get_move(self, gs, move_num, allowed_moves, ai_obj, player):
         board_move, file_move, file_gs = ai_obj.trainer_get_move(gs, move_num, allowed_moves)
