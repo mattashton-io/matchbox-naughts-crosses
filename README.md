@@ -12,3 +12,9 @@
 
   * **File Update:** Implement the logic to overwrite the corresponding line in the file with the newly calculated and normalized probability array.
   * **Recursion Check:** T W noted the importance of adding a check to the recursive call within the `normalize` function to prevent it from potentially falling into an infinite loop, specifically when the normalization causes the last element's probability to become negative.
+
+### Bug Possibilites
+Stored move of 0 although not an option (see "temp/temp-term.txt")
+Poss 1: if new gs needs to be appended, may not be handled correctly by trainer. Correct/legal move still made, however.
+Poss 2: Never overwrites index = 10 because code couldn't find proper proper value/match (i.e. "prob[j][0]")
+Poss 3: Not setting "player" correctly after doing ai vs ai training. Not handling even/odd player switching

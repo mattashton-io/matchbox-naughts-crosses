@@ -9,6 +9,7 @@
 
 #keep track of all moves in game state
 from ai import ai
+from data_mgmt import data_mgmt
 
 class trainer:
     """Punishment and Reward System for Game"""
@@ -18,6 +19,8 @@ class trainer:
         self.ai_moves_0 = []
         self.gs = []
         self.difficulty = difficulty
+        self.dm = data_mgmt()
+        self.ai = ai(difficulty)
         return None
     
     def normalize (self, prob):
@@ -36,29 +39,32 @@ class trainer:
 
         if prob[-1][1] < 0:
             prob[-1][1] = 0
-            prob = normalize(prob) #recursion, function calling itself. Re-normalize in case prob is less than 0
+            prob = self.normalize(prob) #recursion, function calling itself. Re-normalize in case prob is less than 0
 
         return prob
 
     def update_file(self, player): #can add "win" as param if we decide to implement DRAW logic
         #grab game state from self.gs
         for i in range(len(self.gs)):
-            cf = ai.dm.read_from_file(str(self.difficulty) + "_move_" + str(i) + ".txt")
-            state, prob = ai.parse_line(cf[self.gs[i]]) #passing all of lines, BUT we really only want to grab one (self.gs)
+            cf = self.dm.read_from_file(str(self.difficulty) + "_move_" + str(i) + ".txt")
+            # print(self.gs[i])
+            # print("filedump: ", cf)
+            state, prob = self.ai.parse_line(cf[self.gs[i]]) 
 
             #update probabilities in prob section
-            if first_to_move == 0: #inspecting moves made by player 0
+            if self.first_to_move == 0: #inspecting moves made by player 0
                 if i%2 == 0: #even moves made by player 0; are we on an even move?
-                    move = ai_moves_0[i//2] #allows us to update in pairs (W-Ls or L-Ws)
+                    move = self.ai_moves_0[i//2] #allows us to update in pairs (W-Ls or L-Ws)
                 else: #even moves made by player 1
-                    move = ai_moves_1[i//2]
+                    move = self.ai_moves_1[i//2]
             else: #inspecting moves made by player 1
                 if i%2 == 0: #even moves made by player 1
-                    move = ai_moves_0[i//2]
+                    move = self.ai_moves_1[i//2]
                 else: #even moves made by player 0
-                    move = ai_moves_1[i//2]
+                    move = self.ai_moves_0[i//2]
 
             index = 10 #10 is out of bounds
+            # print("update_file move: ", move)
             for j in range(len(prob)):
                 if prob[j][0] == move:
                     index = j #which line we're on inside the prob array
@@ -79,7 +85,8 @@ class trainer:
                 else:
                     prob[index][1] *= 1.05
                     prob = self.normalize(prob)
-
+            # print("gs_prob_line: ", self.dm.generate_line(state, prob))
+            self.dm.update_file(str(self.difficulty) + "_move_" + str(i) + ".txt", self.dm.generate_line(state, prob), self.gs[i])
 
     def get_move(self, gs, move_num, allowed_moves, ai_obj, player):
         board_move, file_move, file_gs = ai_obj.trainer_get_move(gs, move_num, allowed_moves)

@@ -52,7 +52,7 @@ def allowed_moves():
 
 def get_move():
 #check against valid moves
-    time.sleep(2)
+    # time.sleep(2)
     valid_moves = allowed_moves()
     is_valid_move = False
     while not is_valid_move:
@@ -127,6 +127,8 @@ def change_turn():
         player = 1
 
 def init_game():
+    global game_state
+    game_state = ["-", "-", "-", "-", "-", "-", "-", "-", "-"]
     global player
     player = 0
     
@@ -173,8 +175,8 @@ for i in range(8):
 #PLay state
 def play():
     init_game()
-    opponent = ai("easy")
-    game_trainer = trainer("easy")
+    opponent = ai("medium")
+    # game_trainer = trainer("easy")
     global draw
     move_num = 0
     while check_for_win() != 1:
@@ -194,14 +196,13 @@ def play():
         if player == 1:
             move = get_move()
         else:
-            move = game_trainer.get_move(game_state, move_num, allowed_moves(), opponent, player)
-            # move = opponent.get_move(game_state, move_num, allowed_moves())
+            move = opponent.get_move(game_state, move_num, allowed_moves())
             print("move = ", move)
         update_game_state(move, c)
         move_num += 1
     print("-- GAME OVER --")
     if check_for_win() == 1:
-        game_trainer.update_file(player) 
+        # game_trainer.update_file(player) 
         print("Player ", player, " won!")
     else:
         print("It's a Draw")
@@ -221,9 +222,48 @@ def print_symmetries():
             if i%3 == 2:
                 print("\n")
         print("\n")
-play()
+
+
 # print_symmetries()
 
+def trainer_play():
+    init_game()
+    opponent = ai("medium")
+    game_trainer = trainer("medium")
+    global draw
+    move_num = 0
+    while check_for_win() != 1:
+        print("\n")
+        if not allowed_moves():
+            draw = True
+            break
+
+        change_turn()               
+        if player == 1:
+            c = "X"
+        else:
+            c = "O"
+#       update the player 
+
+        #get move from AI
+        if player == 1:
+            move = game_trainer.get_move(game_state, move_num, allowed_moves(), opponent, player)
+        else:
+            move = game_trainer.get_move(game_state, move_num, allowed_moves(), opponent, player)
+            print("move = ", move)
+        update_game_state(move, c)
+        move_num += 1
+    print("-- GAME OVER --")
+    if check_for_win() == 1:
+        game_trainer.update_file(player) 
+        print("Player ", player, " won!")
+    else:
+        print("It's a Draw")
+
+for i in range(100): 
+    trainer_play()
+# 
+# play()
 
 # game_state_test = ["-", "-", "X", "-", "-", "-", "-", "-", "-"]
 # game_state = game_state_test

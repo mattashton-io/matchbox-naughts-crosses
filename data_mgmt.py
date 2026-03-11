@@ -68,5 +68,54 @@ class data_mgmt:
             print(e)
             return -1
 
+    def update_file(self, filename, gs_prob_line, line_num):
+        self.gs_prob_line = gs_prob_line
+        self.filename = filename
+        self.line_num = line_num
+        try:
+            # 1. Read the data
+            with open(filename, "r") as fid:
+                lines = fid.readlines()
 
+            #convert lines into array items
+            lines[line_num] = gs_prob_line
+            if line_num != len(lines) - 1:
+                lines[line_num] += "\n"
+            
+            # 3. Write it back
+            with open(filename, "w") as fid:
+                fid.writelines(lines)
+                                       
+        except Exception as e:
+            print(e)
+            return -1 
+
+
+
+    def generate_line(self, gs_list, prob_list):
+        #ad logic to creat each gs-prob line in file from ["gs[0]",....,"gs[8]" + "prob[0]"" +...+ "prob[n]""]
+        gs_line = "["
+        for gs in range(len(gs_list)):
+            if gs != 8:
+                gs_line += "\"" + gs_list[gs] + "\"" + ", "
+            else:
+                gs_line += "\"" + gs_list[gs] + "\""
+        gs_line += "] "  
+
+        prob_line = "["
+        for prob in range(len(prob_list)):
+            prob_val = str(round(prob_list[prob][1], 3))
+            while len(prob_val) < 5:
+                prob_val += "0" 
+
+            #calculate probably 
+            if prob != len(prob_list) - 1:
+                prob_line += "(" + str(prob_list[prob][0]) + ", " + prob_val + "), " 
+            else:
+                prob_line += "(" + str(prob_list[prob][0]) + ", " + prob_val + ")"      
+        prob_line += "]"    
+        
+        gs_prob_line = gs_line + prob_line
+
+        return gs_prob_line
             

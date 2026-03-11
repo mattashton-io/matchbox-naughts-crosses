@@ -76,6 +76,9 @@ class ai:
                 self.dm.write_to_file(self.filename, gs_prob_line)
             else:
                 self.dm.write_first_line(self.filename, gs_prob_line)
+
+        else:
+            return gs_prob_line
     
     
     #loop through each game state, calculate equivalents
@@ -143,10 +146,10 @@ class ai:
         prob_list = []
         self.filename = str(self.difficulty) + "_move_" + str(self.move_num) + ".txt"
         file_lines = self.dm.read_from_file(self.filename)
-        if move_num >= 7:
+        # if move_num >= 7:
             # print("file_lines: ", file_lines)
             # print("filename: ", self.filename)
-            input()
+            # input()
 
         if file_lines is None:
             self.generate_line(True, True)
@@ -196,10 +199,10 @@ class ai:
         prob_list = []
         self.filename = str(self.difficulty) + "_move_" + str(self.move_num) + ".txt"
         file_lines = self.dm.read_from_file(self.filename)
-        if move_num >= 7:
-            # print("file_lines: ", file_lines)
-            # print("filename: ", self.filename)
-            input()
+        # if move_num >= 7:
+        #     # print("file_lines: ", file_lines)
+        #     # print("filename: ", self.filename)
+        #     input()
 
         if file_lines is None:
             self.generate_line(True, True)
